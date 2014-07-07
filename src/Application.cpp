@@ -27,6 +27,7 @@ void Application::setOutputFile(const std::string& fileName)
 void Application::run()
 {
     createWindow();
+    createGrid();
 
     while (m_Window.isOpen())
     {
@@ -62,3 +63,12 @@ void Application::createWindow()
 {
     m_Window.create(sf::VideoMode(m_Width, m_Height), "Maze Generator!", sf::Style::Close);
 }
+
+void Application::createGrid()
+{
+    m_Grid.setWidth(m_Width);
+    m_Grid.setHeight(m_Height);
+    m_Grid.setNumCells(m_NumCells);
+    m_Grid.create();
+}
+

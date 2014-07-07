@@ -1,6 +1,8 @@
 #ifndef APPLICATION_HPP
 #define APPLICATION_HPP
 
+#include "Grid.hpp"
+
 #include <SFML/Graphics.hpp>
 
 class Application
@@ -21,6 +23,8 @@ class Application
 
     private:
         void createWindow();
+        void createGrid();
+        
 
     private:
         int m_Width;
@@ -29,6 +33,8 @@ class Application
         std::string m_OutputFile;
 
         sf::RenderWindow m_Window;
+
+        Grid m_Grid;
 };
 
 #endif
