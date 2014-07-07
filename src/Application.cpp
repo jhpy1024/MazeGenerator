@@ -54,7 +54,10 @@ void Application::update()
 
 void Application::draw()
 {
-    m_Window.clear();
+    m_Window.clear(sf::Color::White);
+
+    m_Window.setView(m_View);
+    m_Window.draw(m_Grid);
 
     m_Window.display();
 }
@@ -62,6 +65,10 @@ void Application::draw()
 void Application::createWindow()
 {
     m_Window.create(sf::VideoMode(m_Width, m_Height), "Maze Generator!", sf::Style::Close);
+
+    m_View.setCenter(m_Width / 2.f, m_Height / 2.f);
+    m_View.setSize(m_Width, m_Height);
+    m_View.zoom(1.5f);
 }
 
 void Application::createGrid()

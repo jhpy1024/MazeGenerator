@@ -1,19 +1,32 @@
 #ifndef GRID_HPP
 #define GRID_HPP
 
-class Grid
-{
-public:
-   void create();
+#include <SFML/Graphics.hpp>
 
-   void setWidth(int width);
-   void setHeight(int height);
-   void setNumCells(int numCells);
-   
-private:
-    int m_Width;
-    int m_Height;
-    int m_NumCells;
+#include <vector>
+
+class Grid : public sf::Drawable
+{
+    public:
+        void create();
+
+        void setWidth(int width);
+        void setHeight(int height);
+        void setNumCells(int numCells);
+
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    private:
+        void createLines();
+
+    private:
+        int m_Width;
+        int m_Height;
+        int m_NumCells;
+        int m_CellWidth;
+        int m_CellHeight;
+
+        std::vector<sf::RectangleShape> m_Lines; 
 };
 
 #endif
