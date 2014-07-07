@@ -19,6 +19,11 @@ void Application::setNumCells(int numCells)
     m_NumCells = numCells;
 }
 
+void Application::setOutputFile(const std::string& fileName)
+{
+    m_OutputFile = fileName;
+}
+
 void Application::run()
 {
     createWindow();

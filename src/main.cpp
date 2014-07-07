@@ -2,30 +2,31 @@
 
 #include <iostream>
 
+// Command line arguments format:
+//  <execute command> <width> <height> <num cells> <output file>
 int main(int argc, char** argv)
 {
     Application application;
 
-    // Command line arguments format:
-    //  <execute command> <width> <height> <num cells>
-    if (argc != 4)
-    {
-        std::cout << "No arguments specified - Using defaults" << std::endl;
+    int width = 500;
+    int height = 500;
+    int numCells = 10;
+    std::string outputFile = "GeneratedMaze.txt";
 
-        application.setWidth(500);
-        application.setHeight(500);
-        application.setNumCells(10);
-    }
-    else
+    if (argc == 5)
     {
-        auto width = std::atoi(argv[1]);
-        auto height = std::atoi(argv[2]);
-        auto numCells = std::atoi(argv[3]);
-
-        application.setWidth(width);
-        application.setHeight(height);
-        application.setNumCells(numCells);
+        width = std::atoi(argv[1]);
+        height = std::atoi(argv[2]);
+        numCells = std::atoi(argv[3]);
+        outputFile = std::string(argv[4]);
     }
+
+    std::printf("Width: %i\nHeight: %i\nNum Cells: %i\nOutput file: %s\n", width, height, numCells, outputFile.c_str());
+
+    application.setWidth(width);
+    application.setHeight(height);
+    application.setNumCells(numCells);
+    application.setOutputFile(outputFile);
 
     application.run();
 

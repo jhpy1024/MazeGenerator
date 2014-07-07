@@ -11,6 +11,7 @@ class Application
         void setWidth(int width);
         void setHeight(int height);
         void setNumCells(int numCells);
+        void setOutputFile(const std::string& fileName);
 
         void run();
 
@@ -25,6 +26,7 @@ class Application
         int m_Width;
         int m_Height;
         int m_NumCells;
+        std::string m_OutputFile;
 
         sf::RenderWindow m_Window;
 };
