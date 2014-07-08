@@ -73,7 +73,7 @@ bool Grid::allCellsVisited() const
     return allVisited;
 }
 
-std::vector<sf::Vector2i> Grid::getNeighbors(Cell& cell) const
+std::vector<sf::Vector2i> Grid::getNeighbors(const Cell& cell) const
 {
     auto pos = cell.getPosition();
     std::vector<sf::Vector2i> neighbors;

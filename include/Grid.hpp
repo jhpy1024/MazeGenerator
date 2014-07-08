@@ -24,7 +24,7 @@ class Grid : public sf::Drawable
         void generate(Cell& currentCell);
         sf::Vector2i getRandomCell() const;
         bool allCellsVisited() const;
-        std::vector<sf::Vector2i> getNeighbors(Cell& cell) const;
+        std::vector<sf::Vector2i> getNeighbors(const Cell& cell) const;
         bool hasUnvisitedNeighbors(Cell& cell) const;
 
         void createCells();

@@ -18,7 +18,7 @@ Cell::Cell(int x, int y, int width, int height)
 void Cell::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
-    target.draw(m_Shape);
+    target.draw(m_Shape, states);
 }
 
 void Cell::setVisited()
@@ -61,5 +61,4 @@ void Cell::createShape()
 {
     m_Shape.setSize(sf::Vector2f(m_Width, m_Height));
     m_Shape.setFillColor(NOT_WALKABLE_COLOR);
-    m_Shape.setPosition(getPosition().x, getPosition().y);
 }
