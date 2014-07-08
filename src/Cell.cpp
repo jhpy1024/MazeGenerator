@@ -8,7 +8,7 @@ Cell::Cell(int x, int y, int width, int height)
     , m_Visited(false)
     , m_IsWalkable(false)
     , WALKABLE_COLOR(sf::Color::White)
-    , NOT_WALKABLE_COLOR(sf::Color(128, 128, 128))
+    , NOT_WALKABLE_COLOR(sf::Color::Black)
     , m_Parent(nullptr)
 {
     setPosition(m_X * m_Width, m_Y * m_Height);
@@ -52,9 +52,14 @@ Cell* Cell::getParent() const
     return m_Parent;    
 }
 
+sf::Vector2i Cell::getPosition() const
+{
+    return { m_X, m_Y };
+}
+
 void Cell::createShape()
 {
     m_Shape.setSize(sf::Vector2f(m_Width, m_Height));
     m_Shape.setFillColor(NOT_WALKABLE_COLOR);
-    m_Shape.setPosition(getPosition());
+    m_Shape.setPosition(getPosition().x, getPosition().y);
 }

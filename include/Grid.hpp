@@ -18,9 +18,17 @@ class Grid : public sf::Drawable
 
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    private:
-        void createCells();
+        void generateMaze();
 
+    private:
+        void generate(Cell& currentCell);
+        sf::Vector2i getRandomCell() const;
+        bool allCellsVisited() const;
+        std::vector<sf::Vector2i> getNeighbors(Cell& cell) const;
+        bool hasUnvisitedNeighbors(Cell& cell) const;
+
+        void createCells();
+        
     private:
         int m_Width;
         int m_Height;

@@ -1,11 +1,14 @@
 #include "Application.hpp"
 
 #include <iostream>
+#include <ctime>
 
 // Command line arguments format:
 //  ./MazeGenerator <width> <height> <num cells> <output file>
 int main(int argc, char** argv)
 {
+    srand(time(NULL));
+
     Application application;
 
     int width = 500;

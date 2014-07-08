@@ -18,6 +18,8 @@ class Cell : public sf::Drawable, public sf::Transformable
 
         void setParent(Cell* parent);
         Cell* getParent() const;
+
+        sf::Vector2i getPosition() const;
         
     private:
         void createShape();
