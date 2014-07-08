@@ -3,7 +3,7 @@
 #include <iostream>
 
 // Command line arguments format:
-//  <execute command> <width> <height> <num cells> <output file>
+//  ./MazeGenerator <width> <height> <num cells> <output file>
 int main(int argc, char** argv)
 {
     Application application;
@@ -13,13 +13,22 @@ int main(int argc, char** argv)
     int numCells = 10;
     std::string outputFile = "GeneratedMaze.txt";
 
-    if (argc == 5)
+    if (argc != 1)
     {
-        width = std::atoi(argv[1]);
-        height = std::atoi(argv[2]);
-        numCells = std::atoi(argv[3]);
-        outputFile = std::string(argv[4]);
+        if (argc == 5)
+        {
+            width = std::atoi(argv[1]);
+            height = std::atoi(argv[2]);
+            numCells = std::atoi(argv[3]);
+            outputFile = std::string(argv[4]);
+        }
+        else
+        {
+            std::printf("==\nIncorrect arguments. Using defaults\n");
+            std::printf("Usage: ./MazeGenerator <width> <height> <num cells> <output file>\n==\n\n");
+        }
     }
+
 
     std::printf("Width: %i\nHeight: %i\nNum Cells: %i\nOutput file: %s\n", width, height, numCells, outputFile.c_str());
 
