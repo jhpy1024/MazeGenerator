@@ -10,13 +10,14 @@ Cell::Cell(int x, int y, int width, int height)
     , WALKABLE_COLOR(sf::Color::White)
     , NOT_WALKABLE_COLOR(sf::Color(128, 128, 128))
 {
-    setPosition(x * width, y * height);
+    setPosition(m_X * m_Width, m_Y * m_Height);
     createShape();
 }
 
 void Cell::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
+    target.draw(m_Shape);
 }
 
 void Cell::setVisited()
@@ -44,4 +45,5 @@ void Cell::createShape()
 {
     m_Shape.setSize(sf::Vector2f(m_Width, m_Height));
     m_Shape.setFillColor(NOT_WALKABLE_COLOR);
+    m_Shape.setPosition(getPosition());
 }
