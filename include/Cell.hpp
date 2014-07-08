@@ -16,6 +16,9 @@ class Cell : public sf::Drawable, public sf::Transformable
         void setWalkable();
         bool getIsWalkable() const;
 
+        void setParent(Cell* parent);
+        Cell* getParent() const;
+        
     private:
         void createShape();
 
@@ -31,6 +34,8 @@ class Cell : public sf::Drawable, public sf::Transformable
         sf::RectangleShape m_Shape;
         const sf::Color WALKABLE_COLOR;
         const sf::Color NOT_WALKABLE_COLOR;
+
+        Cell* m_Parent;
 };
 
 #endif

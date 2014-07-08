@@ -9,6 +9,7 @@ Cell::Cell(int x, int y, int width, int height)
     , m_IsWalkable(false)
     , WALKABLE_COLOR(sf::Color::White)
     , NOT_WALKABLE_COLOR(sf::Color(128, 128, 128))
+    , m_Parent(nullptr)
 {
     setPosition(m_X * m_Width, m_Y * m_Height);
     createShape();
@@ -39,6 +40,16 @@ void Cell::setWalkable()
 bool Cell::getIsWalkable() const
 {
     return m_IsWalkable;
+}
+
+void Cell::setParent(Cell* parent)
+{
+    m_Parent = parent;
+}
+
+Cell* Cell::getParent() const
+{
+    return m_Parent;    
 }
 
 void Cell::createShape()
