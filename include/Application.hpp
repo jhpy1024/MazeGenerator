@@ -32,7 +32,6 @@ class Application
         std::string m_OutputFile;
 
         sf::RenderWindow m_Window;
-        sf::View m_View;
 
         Grid m_Grid;
 };

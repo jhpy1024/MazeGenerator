@@ -17,16 +17,11 @@ class Grid : public sf::Drawable
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     private:
-        void createLines();
-
-    private:
         int m_Width;
         int m_Height;
         int m_NumCells;
         int m_CellWidth;
         int m_CellHeight;
-
-        std::vector<sf::RectangleShape> m_Lines; 
 };
 
 #endif
