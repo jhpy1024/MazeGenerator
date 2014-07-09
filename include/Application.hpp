@@ -25,6 +25,8 @@ class Application
         void createWindow();
         void createGrid();
 
+        void handleKeyPress(const sf::Event& event);
+
     private:
         int m_Width;
         int m_Height;
@@ -32,6 +34,7 @@ class Application
         std::string m_OutputFile;
 
         sf::RenderWindow m_Window;
+        sf::View m_View;
 
         Grid m_Grid;
 };

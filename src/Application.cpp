@@ -44,6 +44,8 @@ void Application::handleInput()
     {
         if (event.type == sf::Event::Closed)
             m_Window.close();
+        else if (event.type == sf::Event::KeyPressed)
+            handleKeyPress(event);
     }
 }
 
@@ -54,8 +56,9 @@ void Application::update()
 
 void Application::draw()
 {
-    m_Window.clear(sf::Color::White);
+    m_Window.clear(sf::Color(32, 32, 32));
 
+    m_Window.setView(m_View);
     m_Window.draw(m_Grid);
 
     m_Window.display();
@@ -64,6 +67,10 @@ void Application::draw()
 void Application::createWindow()
 {
     m_Window.create(sf::VideoMode(m_Width, m_Height), "Maze Generator!", sf::Style::Close);
+
+    m_View.setCenter(m_Width / 2.f, m_Height / 2.f);
+    m_View.setSize(m_Width, m_Height);
+    m_View.zoom(1.08f);
 }
 
 void Application::createGrid()
@@ -74,3 +81,14 @@ void Application::createGrid()
     m_Grid.create();
 }
 
+void Application::handleKeyPress(const sf::Event& event)
+{
+    switch (event.key.code)
+    {
+        case sf::Keyboard::Space:
+            m_Grid.generateMaze();
+            break;
+        default:
+            break;
+    }
+}

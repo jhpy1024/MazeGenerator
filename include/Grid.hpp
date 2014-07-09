@@ -32,6 +32,8 @@ class Grid : public sf::Drawable
 
         void drawCells(sf::RenderTarget& target, sf::RenderStates states) const;
         void drawWalls(sf::RenderTarget& target, sf::RenderStates states) const;
+
+        void reset();
         
     private:
         int m_Width;

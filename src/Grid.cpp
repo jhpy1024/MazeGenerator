@@ -8,7 +8,6 @@ void Grid::create()
     m_CellHeight = m_Height / m_NumCells;
 
     createCells();
-    generateMaze();
 }
 
 void Grid::setWidth(int width)
@@ -34,6 +33,8 @@ void Grid::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Grid::generateMaze()
 {
+    reset();
+
     auto totalCells = m_NumCells * m_NumCells;
     std::stack<sf::Vector2i> path;
 
@@ -208,6 +209,7 @@ bool Grid::hasUnvisitedNeighbors(Cell& cell) const
 
 void Grid::createCells()
 {
+    m_Cells.clear();
     for (int x = 0; x < m_NumCells; ++x)
     {
         m_Cells.push_back(std::vector<Cell>());
@@ -234,7 +236,9 @@ void Grid::drawCells(sf::RenderTarget& target, sf::RenderStates states) const
 void Grid::drawWalls(sf::RenderTarget& target, sf::RenderStates states) const
 {
     sf::RectangleShape wall;
-    wall.setFillColor(sf::Color::Black);
+    wall.setFillColor(sf::Color::White);
+    wall.setOutlineThickness(1.f);
+    wall.setOutlineColor(sf::Color::White);
 
     for (int x = 0; x < m_NumCells; ++x)
     {
@@ -271,4 +275,9 @@ void Grid::drawWalls(sf::RenderTarget& target, sf::RenderStates states) const
             }
         }
     }
+}
+
+void Grid::reset()
+{
+    createCells();
 }

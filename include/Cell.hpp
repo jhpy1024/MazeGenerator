@@ -20,9 +20,6 @@ class Cell : public sf::Drawable, public sf::Transformable
         void setVisited();
         bool getIsVisited() const;
 
-        void setParent(Cell* parent);
-        Cell* getParent() const;
-
         sf::Vector2i getPosition() const;
 
         void openWall(Wall wall);
@@ -40,8 +37,6 @@ class Cell : public sf::Drawable, public sf::Transformable
         bool m_Visited;
 
         sf::RectangleShape m_Shape;
-
-        Cell* m_Parent;
 
         // m_Walls[0]: North
         // m_Walls[1]: East

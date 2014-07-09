@@ -6,7 +6,6 @@ Cell::Cell(int x, int y, int width, int height)
     , m_Width(width)
     , m_Height(height)
     , m_Visited(false)
-    , m_Parent(nullptr)
 {
     setPosition(m_X * m_Width, m_Y * m_Height);
     createShape();
@@ -26,16 +25,6 @@ void Cell::setVisited()
 bool Cell::getIsVisited() const
 {
     return m_Visited;
-}
-
-void Cell::setParent(Cell* parent)
-{
-    m_Parent = parent;
-}
-
-Cell* Cell::getParent() const
-{
-    return m_Parent;    
 }
 
 sf::Vector2i Cell::getPosition() const
@@ -58,5 +47,5 @@ bool Cell::isWallOpen(Wall wall) const
 void Cell::createShape()
 {
     m_Shape.setSize(sf::Vector2f(m_Width, m_Height));
-    m_Shape.setFillColor(sf::Color::White);
+    m_Shape.setFillColor(sf::Color::Black);
 }
