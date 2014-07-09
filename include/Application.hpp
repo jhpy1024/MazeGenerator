@@ -13,7 +13,7 @@ class Application
         void setWidth(int width);
         void setHeight(int height);
         void setNumCells(int numCells);
-        void setOutputFile(const std::string& fileName);
+        void setOutputPrefix(const std::string& prefix);
 
         void run();
 
@@ -31,7 +31,7 @@ class Application
         int m_Width;
         int m_Height;
         int m_NumCells;
-        std::string m_OutputFile;
+        std::string m_OutputPrefix;
 
         sf::RenderWindow m_Window;
         sf::View m_View;

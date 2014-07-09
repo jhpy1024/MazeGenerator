@@ -20,6 +20,8 @@ class Grid : public sf::Drawable
 
         void generateMaze();
 
+        void saveToFile(const std::string& prefix);
+
     private:
         sf::Vector2i getRandomCell() const;
         bool allCellsVisited() const;
@@ -41,6 +43,8 @@ class Grid : public sf::Drawable
         int m_NumCells;
         int m_CellWidth;
         int m_CellHeight;
+
+        int m_MazeID;
 
         std::vector<std::vector<Cell>> m_Cells;
 };

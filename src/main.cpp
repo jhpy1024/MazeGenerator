@@ -14,7 +14,7 @@ int main(int argc, char** argv)
     int width = 500;
     int height = 500;
     int numCells = 10;
-    std::string outputFile = "GeneratedMaze.txt";
+    std::string outputPrefix = "maze";
 
     if (argc != 1)
     {
@@ -23,22 +23,22 @@ int main(int argc, char** argv)
             width = std::atoi(argv[1]);
             height = std::atoi(argv[2]);
             numCells = std::atoi(argv[3]);
-            outputFile = std::string(argv[4]);
+            outputPrefix = std::string(argv[4]);
         }
         else
         {
             std::printf("==\nIncorrect arguments. Using defaults\n");
-            std::printf("Usage: ./MazeGenerator <width> <height> <num cells> <output file>\n==\n\n");
+            std::printf("Usage: ./MazeGenerator <width> <height> <num cells> <output prefix>\n==\n\n");
         }
     }
 
 
-    std::printf("Width: %i\nHeight: %i\nNum Cells: %i\nOutput file: %s\n", width, height, numCells, outputFile.c_str());
+    std::printf("Width: %i\nHeight: %i\nNum Cells: %i\nOutput prefix: %s\n", width, height, numCells, outputPrefix.c_str());
 
     application.setWidth(width);
     application.setHeight(height);
     application.setNumCells(numCells);
-    application.setOutputFile(outputFile);
+    application.setOutputPrefix(outputPrefix);
 
     application.run();
 

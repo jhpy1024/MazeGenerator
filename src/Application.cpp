@@ -19,9 +19,9 @@ void Application::setNumCells(int numCells)
     m_NumCells = numCells;
 }
 
-void Application::setOutputFile(const std::string& fileName)
+void Application::setOutputPrefix(const std::string& prefix)
 {
-    m_OutputFile = fileName;
+    m_OutputPrefix = prefix;
 }
 
 void Application::run()
@@ -87,6 +87,9 @@ void Application::handleKeyPress(const sf::Event& event)
     {
         case sf::Keyboard::Space:
             m_Grid.generateMaze();
+            break;
+        case sf::Keyboard::S:
+            m_Grid.saveToFile(m_OutputPrefix);
             break;
         default:
             break;

@@ -1,11 +1,14 @@
 #include "Grid.hpp"
 
 #include <stack>
+#include <fstream>
 
 void Grid::create()
 {
     m_CellWidth = m_Width / m_NumCells;
     m_CellHeight = m_Height / m_NumCells;
+
+    m_MazeID = 0;
 
     createCells();
 }
@@ -89,6 +92,43 @@ void Grid::generateMaze()
             path.pop();
         }
     }
+}
+
+// Each cell is represented by 4 characters which are either '1' or '0'
+// 
+// Format:
+//      North    East    South   West
+//      X        X       X       X
+// 
+// '1' means that the wall is open
+// '0' means that the wall is closed
+//
+// Example 2x2 grid with all walls closed:
+//      0000 0000
+//      0000 0000
+void Grid::saveToFile(const std::string& prefix)
+{
+    std::ofstream file;
+    file.open(prefix + std::to_string(m_MazeID) + ".txt");
+
+    for (int y = 0; y < m_NumCells; ++y)
+    {
+        for (int x = 0; x < m_NumCells; ++x)
+        {
+            file << m_Cells[x][y].isWallOpen(Wall::North)
+                 << m_Cells[x][y].isWallOpen(Wall::East)
+                 << m_Cells[x][y].isWallOpen(Wall::South)
+                 << m_Cells[x][y].isWallOpen(Wall::West)
+                 << (x == m_NumCells - 1 ? "" : " ");
+        }
+
+        file << "\n";
+    }
+    
+    file.close();
+
+    std::printf("Saved maze to file: %s%i.txt\n", prefix.c_str(), m_MazeID);
+    ++m_MazeID;
 }
 
 sf::Vector2i Grid::getRandomCell() const
@@ -192,7 +232,7 @@ std::vector<sf::Vector2i> Grid::getUnvisitedNeighbors(const Cell& cell) const
         if (!m_Cells[neighbor.x][neighbor.y].getIsVisited())
             neighbors.push_back(neighbor);
     }
-    
+
     return neighbors;
 }
 
