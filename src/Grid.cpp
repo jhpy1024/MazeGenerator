@@ -1,11 +1,14 @@
 #include "Grid.hpp"
 
+#include <stack>
+
 void Grid::create()
 {
     m_CellWidth = m_Width / m_NumCells;
     m_CellHeight = m_Height / m_NumCells;
 
     createCells();
+    generateMaze();
 }
 
 void Grid::setWidth(int width)
@@ -25,29 +28,66 @@ void Grid::setNumCells(int numCells)
 
 void Grid::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    for (int x = 0; x < m_NumCells; ++x)
-    {
-        for (int y = 0; y < m_NumCells; ++y)
-        {
-            target.draw(m_Cells[x][y]);
-        }
-    }
+    drawCells(target, states);
+    drawWalls(target, states);
 }
 
 void Grid::generateMaze()
 {
-    auto randCellPos = getRandomCell();
-    generate(m_Cells[randCellPos.x][randCellPos.y]);
-}
+    auto totalCells = m_NumCells * m_NumCells;
+    std::stack<sf::Vector2i> path;
 
-void Grid::generate(Cell& currentCell)
-{
-    // If all the cells have been visited, the
-    // algorithm is complete
-    if (allCellsVisited())
-        return;
+    auto currentCell = getRandomCell();
+    path.push(currentCell);
+    auto numVisited = 1;
 
-    
+    while (numVisited < totalCells)
+    {
+        auto neighbors = getUnvisitedNeighbors(m_Cells[currentCell.x][currentCell.y]);
+        if (!neighbors.empty())
+        {
+            auto randIndex = rand() % neighbors.size();
+            auto randNeighbor = neighbors[randIndex];
+
+            auto dx = randNeighbor.x - currentCell.x;
+            auto dy = randNeighbor.y - currentCell.y;
+
+            // If neighbor to right
+            if (dx == 1)
+            {
+                m_Cells[currentCell.x][currentCell.y].openWall(Wall::East);
+                m_Cells[randNeighbor.x][randNeighbor.y].openWall(Wall::West);
+            }
+            // If neighbor to left
+            else if (dx == -1)
+            {
+                m_Cells[currentCell.x][currentCell.y].openWall(Wall::West);
+                m_Cells[randNeighbor.x][randNeighbor.y].openWall(Wall::East);
+            }
+            // If neighbor above
+            else if (dy == -1)
+            {
+                m_Cells[currentCell.x][currentCell.y].openWall(Wall::North);
+                m_Cells[randNeighbor.x][randNeighbor.y].openWall(Wall::South);
+            }
+            // If neighbor below
+            else if (dy == 1)
+            {
+                m_Cells[currentCell.x][currentCell.y].openWall(Wall::South);
+                m_Cells[randNeighbor.x][randNeighbor.y].openWall(Wall::North);
+            }
+
+            m_Cells[randNeighbor.x][randNeighbor.y].setVisited();
+            ++numVisited;
+            currentCell = randNeighbor;
+            path.push(currentCell);
+        }
+        else
+        {
+            currentCell = path.top();
+            path.pop();
+        }
+    }
 }
 
 sf::Vector2i Grid::getRandomCell() const
@@ -142,6 +182,25 @@ std::vector<sf::Vector2i> Grid::getNeighbors(const Cell& cell) const
     return neighbors;
 }
 
+std::vector<sf::Vector2i> Grid::getUnvisitedNeighbors(const Cell& cell) const
+{
+    std::vector<sf::Vector2i> neighbors;
+
+    for (auto& neighbor : getNeighbors(cell))
+    {
+        if (!m_Cells[neighbor.x][neighbor.y].getIsVisited())
+            neighbors.push_back(neighbor);
+    }
+    
+    return neighbors;
+}
+
+sf::Vector2i Grid::getRandomNeighbor(const std::vector<sf::Vector2i>& neighbors) const
+{
+    auto randIndex = rand() % neighbors.size();
+    return neighbors[randIndex];
+}
+
 bool Grid::hasUnvisitedNeighbors(Cell& cell) const
 {
     return false;
@@ -156,6 +215,60 @@ void Grid::createCells()
         {
             Cell cell(x, y, m_CellWidth, m_CellHeight);
             m_Cells[x].push_back(cell);
+        }
+    }
+}
+
+void Grid::drawCells(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    for (int x = 0; x < m_NumCells; ++x)
+    {
+        for (int y = 0; y < m_NumCells; ++y)
+        {
+            target.draw(m_Cells[x][y]);
+        }
+    }
+
+}
+
+void Grid::drawWalls(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    sf::RectangleShape wall;
+    wall.setFillColor(sf::Color::Black);
+
+    for (int x = 0; x < m_NumCells; ++x)
+    {
+        for (int y = 0; y < m_NumCells; ++y)
+        {
+            auto& cell = m_Cells[x][y];
+
+            if (!cell.isWallOpen(Wall::North))
+            {
+                wall.setPosition(x * m_CellWidth, y * m_CellHeight);
+                wall.setSize(sf::Vector2f(m_CellWidth, 1.f));
+                target.draw(wall, states);
+            }
+
+            if (!cell.isWallOpen(Wall::East))
+            {
+                wall.setPosition((x + 1) * m_CellWidth, y * m_CellHeight);
+                wall.setSize(sf::Vector2f(1.f, m_CellHeight));
+                target.draw(wall, states);
+            }
+
+            if (!cell.isWallOpen(Wall::South))
+            {
+                wall.setPosition(x * m_CellWidth, (y + 1) * m_CellHeight);
+                wall.setSize(sf::Vector2f(m_CellWidth, 1.f));
+                target.draw(wall, states);
+            }
+
+            if (!cell.isWallOpen(Wall::West))
+            {
+                wall.setPosition(x * m_CellWidth, y * m_CellHeight);
+                wall.setSize(sf::Vector2f(1.f, m_CellHeight));
+                target.draw(wall, states);
+            }
         }
     }
 }

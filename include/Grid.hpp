@@ -21,13 +21,17 @@ class Grid : public sf::Drawable
         void generateMaze();
 
     private:
-        void generate(Cell& currentCell);
         sf::Vector2i getRandomCell() const;
         bool allCellsVisited() const;
         std::vector<sf::Vector2i> getNeighbors(const Cell& cell) const;
+        std::vector<sf::Vector2i> getUnvisitedNeighbors(const Cell& cell) const;
+        sf::Vector2i getRandomNeighbor(const std::vector<sf::Vector2i>& neighbors) const;
         bool hasUnvisitedNeighbors(Cell& cell) const;
 
         void createCells();
+
+        void drawCells(sf::RenderTarget& target, sf::RenderStates states) const;
+        void drawWalls(sf::RenderTarget& target, sf::RenderStates states) const;
         
     private:
         int m_Width;

@@ -43,6 +43,18 @@ sf::Vector2i Cell::getPosition() const
     return { m_X, m_Y };
 }
 
+void Cell::openWall(Wall wall)
+{
+    auto index = static_cast<int>(wall);
+    m_Walls.set(index);
+}
+
+bool Cell::isWallOpen(Wall wall) const
+{
+    auto index = static_cast<int>(wall);
+    return m_Walls[index];
+}
+
 void Cell::createShape()
 {
     m_Shape.setSize(sf::Vector2f(m_Width, m_Height));
