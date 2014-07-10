@@ -2,6 +2,7 @@
 #define APPLICATION_HPP
 
 #include "Grid.hpp"
+#include "SaveFileOverlay.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -37,6 +38,8 @@ class Application
         sf::View m_View;
 
         Grid m_Grid;
+
+        SaveFileOverlay m_SaveOverlay;
 };
 
 #endif

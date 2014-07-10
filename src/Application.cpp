@@ -51,7 +51,6 @@ void Application::handleInput()
 
 void Application::update()
 {
-
 }
 
 void Application::draw()
@@ -60,6 +59,7 @@ void Application::draw()
 
     m_Window.setView(m_View);
     m_Window.draw(m_Grid);
+    m_Window.draw(m_SaveOverlay);
 
     m_Window.display();
 }
@@ -71,6 +71,8 @@ void Application::createWindow()
     m_View.setCenter(m_Width / 2.f, m_Height / 2.f);
     m_View.setSize(m_Width, m_Height);
     m_View.zoom(1.08f);
+
+    m_SaveOverlay.create(m_Width, m_Height);
 }
 
 void Application::createGrid()
@@ -90,6 +92,7 @@ void Application::handleKeyPress(const sf::Event& event)
             break;
         case sf::Keyboard::S:
             m_Grid.saveToFile(m_OutputPrefix);
+            m_SaveOverlay.show();
             break;
         default:
             break;
